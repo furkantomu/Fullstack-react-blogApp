@@ -6,6 +6,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### VIEW DEMO: https://zealous-davinci-297294.netlify.app
 
+** backend repository: ** *https://github.com/furkantomu/node-express-blog-restful-api* 
+
 In the project directory, you can run:
 
 ### `npm start`
