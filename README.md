@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-### VIEW DEMO: https://frosty-euler-bff4bb.netlify.app/
+### VIEW DEMO: https://zealous-davinci-297294.netlify.app
 
 In the project directory, you can run:
 
