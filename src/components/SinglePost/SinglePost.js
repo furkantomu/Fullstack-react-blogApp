@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { BiImageAdd } from "react-icons/bi";
 import {
@@ -17,7 +17,7 @@ import {
 } from "./singlepost-elements";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePost, getPost, getPosts, updatePost } from "../../actions/postsAction";
+import { deletePost, updatePost } from "../../actions/postsAction";
 import LoadingProgress from "../LoadingProgress";
 import ErrorBox from "../ErrorBox";
 import FileBase from "react-file-base64";
@@ -31,30 +31,32 @@ const SinglePost = React.memo((props) => {
   const history = useHistory();
 
   const postsReducer = useSelector((state) => state.postsReducer);
-  const { singlePost, loading } = postsReducer;
+  const { posts, loading } = postsReducer;
 
   const userSigninReducer = useSelector((state) => state.userSigninReducer);
   const { userInfo } = userSigninReducer;
 
   const dispatch = useDispatch();
 
+
+  let singlePost = posts && posts.filter((post) => post._id === props.postId);
   const postDeleted = useCallback(() => {
     const deletedPost = {
-      username: singlePost.username,
+      username: singlePost[0] && singlePost[0].username,
     };
-    dispatch(deletePost(props.postId, deletedPost));
+    dispatch(deletePost(props && props.postId, deletedPost));
     setTimeout(()=>{
       history.push(props.redirect);
-      dispatch(getPosts())
-    },5000);
-  }, [dispatch, singlePost, props,history]);
+      
+    },3000);
+  }, [dispatch,singlePost, props,history]);
 
 
 
   const updateModeChange = useCallback(() => {
     setUpdateMode((updateMode) => !updateMode);
-    setTitle((title) => (title = singlePost.title));
-    setDesc((desc) => (desc = singlePost.desc));
+    setTitle((title) => (title = singlePost[0].title));
+    setDesc((desc) => (desc = singlePost[0].desc));
   }, [singlePost]);
 
   const setPost = useCallback(
@@ -80,13 +82,13 @@ const SinglePost = React.memo((props) => {
         <LoadingProgress />
       ) : (
         <SinglePostWrapper>
-          {!singlePost && (
+          {!singlePost[0] && (
             <ErrorBox severity="info">Post has been deleted</ErrorBox>
           )}
           {updateMode && file ? (
             <SinglePostImg alt="" src={file} />
-          ) : singlePost && singlePost.image ? (
-            <SinglePostImg alt="" src={singlePost.image} />
+          ) : singlePost[0] && singlePost[0].image ? (
+            <SinglePostImg alt="" src={singlePost[0].image} />
           ) : (
             <SinglePostImg
               alt=""
@@ -122,11 +124,11 @@ const SinglePost = React.memo((props) => {
                 onChange={(e) => setTitle(e.target.value)}
               />
             ) : (
-              <h1>{singlePost && singlePost.title}</h1>
+              <h1>{singlePost[0] && singlePost[0].title}</h1>
             )}
           </SinglePostTitle>
-          {userInfo && singlePost && (
-            userInfo.username === singlePost.username ? (
+          {userInfo && singlePost[0] && (
+            userInfo.username === singlePost[0].username ? (
               <SinglePostEdit>
               <FiEdit
                 style={{ marginLeft: 10, cursor: "pointer", color: "teal" }}
@@ -141,12 +143,14 @@ const SinglePost = React.memo((props) => {
 
           <SinglePostInfo>
             <SinglePostDate>
-              {singlePost && new Date(singlePost.createdAt).toDateString()}
+            {singlePost[0] && singlePost[0].createdAt
+              ? new Date(singlePost[0].createdAt).toDateString()
+              : new Date().toDateString()}
             </SinglePostDate>
             <SinglePostAuthor>
               Author:{" "}
-              <Link to={`/?user=${singlePost && singlePost.username}`}>
-                {singlePost && singlePost.username}
+              <Link to={`/?user=${singlePost[0] && singlePost[0].username}`}>
+                {singlePost[0] && singlePost[0].username}
               </Link>
             </SinglePostAuthor>
           </SinglePostInfo>
@@ -156,7 +160,7 @@ const SinglePost = React.memo((props) => {
               onChange={(e) => setDesc(e.target.value)}
             />
           ) : (
-            <SinglePostDesc>{singlePost && singlePost.desc}</SinglePostDesc>
+            <SinglePostDesc>{singlePost[0] && singlePost[0].desc}</SinglePostDesc>
           )}
         </SinglePostWrapper>
       )}

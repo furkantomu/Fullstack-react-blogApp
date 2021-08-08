@@ -61,7 +61,6 @@ const Write = (props) => {
       } else {
         await dispatch(addPost(newPost));
         props.history.push(`/`);
-        dispatch(getPosts())
       }
     },
     [categories, dispatch, postData, userInfo, props]

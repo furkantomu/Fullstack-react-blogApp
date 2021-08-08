@@ -1,8 +1,5 @@
 import Axios from "axios";
 import {
-  GET_POST_FAIL,
-  GET_POST_REQUEST,
-  GET_POST_SUCCESS,
   POSTS_LIST_FAIL,
   POSTS_LIST_REQUEST,
   POSTS_LIST_SUCCESS,
@@ -23,7 +20,7 @@ export const getPosts = (search) => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(
-      `${search ? "/api/posts" + search : "/api/posts"}`
+      `${search ? "/api/posts?category=" + search : "/api/posts"}`
     );
     dispatch({
       type: POSTS_LIST_SUCCESS,
@@ -56,33 +53,15 @@ export const addPost = (newPost) => async (dispatch) => {
   }
 };
 
-export const getPost = (id) => async (dispatch) => {
-  dispatch({
-    type: GET_POST_REQUEST,
-  });
-  try {
-    const { data } = await Axios.get(`/api/posts/${id}`);
-    dispatch({
-      type: GET_POST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: GET_POST_FAIL,
-      payload: error.message,
-    });
-  }
-};
-
 export const deletePost = (id, deletedPost) => async (dispatch) => {
   dispatch({
     type: POST_DELETE_REQUEST,
   });
   try {
-    const { data} = await Axios.delete(`/api/posts/${id}`, {data:deletePost});
+    const { data} = await Axios.delete(`/api/posts/${id}`, deletedPost);
     dispatch({
       type: POST_DELETE_SUCCESS,
-      payload: data._id,
+      payload: {data,id},
     });
   } catch (error) {
     dispatch({

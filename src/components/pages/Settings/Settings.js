@@ -140,7 +140,9 @@ const Settings = (props) => {
           {userInfo && (
             <ErrorBox severity="success">
               Profile has been created:{" "}
-              {new Date(userInfo.createdAt).toDateString()}
+              {userInfo.createdAt
+              ? new Date(userInfo.createdAt).toDateString()
+              : new Date().toDateString()}
             </ErrorBox>
           )}
           {error ? (

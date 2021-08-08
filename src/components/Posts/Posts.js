@@ -11,6 +11,7 @@ const Posts = React.memo((props) => {
 
 
   const { posts,error,loading } = props;
+  
   return (
     <PostsContainer>
       
@@ -20,7 +21,7 @@ const Posts = React.memo((props) => {
         <h1>{error}</h1>
       ) : (
         posts && posts.map((item, index) => {
-          return  <Post key={index} item={item} />;
+          return  <Post key={index} item={item}  />;
         })
         
       )}

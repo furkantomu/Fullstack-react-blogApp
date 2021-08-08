@@ -13,32 +13,32 @@ const Home = () => {
   const { search } = useLocation();
   const dispatch = useDispatch();
 
+
   const [changeCategory, setChangeCategory] = useState("");
+
 
   const state = useSelector((state) => state.postsReducer);
   const { posts, error } = state;
-
+  
   useEffect(() => {
-    let mounted = true;
-
-    if (mounted) {
-      if (search) {
-        dispatch(getPosts(search));
-        if (!search) {
-          setChangeCategory((changeCategory) => (changeCategory = ""));
-        }
-      }
+    if(search){
+      dispatch(getPosts(changeCategory));
+    }else{
+      setChangeCategory((changeCategory) => (changeCategory = ""));
     }
-    return () => (mounted = false);
-
     // eslint-disable-next-line
-  }, [search]);
+  }, [dispatch,search]);
+
+
+
+  
+
 
   return (
     <>
       <Header changeCategory={changeCategory} />
       <HomeContainer>
-        <Posts error={error} posts={posts} />
+        <Posts error={error} posts={posts}/>
         <SideBar setChangeCategory={setChangeCategory} />
       </HomeContainer>
     </>

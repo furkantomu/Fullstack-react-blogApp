@@ -15,25 +15,12 @@ import TopBar from "./components/Topbar/TopBar";
 const App = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.postsReducer);
-  const { loading, singlePost } = state;
+  const { loading } = state;
 
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      dispatch(getPosts());
-    }
-    return () => (mounted = false);
-    // eslint-disable-next-line
-  }, [singlePost]);
-
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
       dispatch(getCategoryList());
-    }
-    return () => (mounted = false);
-    // eslint-disable-next-line
-  }, []);
+      dispatch(getPosts());
+  }, [dispatch]);
 
   return (
     <Router>

@@ -10,13 +10,14 @@ import {
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-const Header = React.memo((props) => {
+const Header = React.memo(({changeCategory}) => {
 
   useMemo(() => {
     Aos.init({
       duration: 1000,
     });
   }, []);
+  
 
 
   return (
@@ -29,12 +30,12 @@ const Header = React.memo((props) => {
         alt=""
         src="https://images.pexels.com/photos/1167355/pexels-photo-1167355.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       />
-      {props.changeCategory && (
+      {changeCategory && (
         <HeaderHero>
           <HeaderCategoryChange>
             <h1 data-aos="fade-left">
               <p style={{ fontSize: 15 }}>TAG:</p>
-              {props.changeCategory}
+              {changeCategory}
             </h1>
           </HeaderCategoryChange>
         </HeaderHero>

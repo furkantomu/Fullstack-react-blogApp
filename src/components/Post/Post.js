@@ -14,13 +14,11 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 
 const Post = React.memo(({ item }) => {
- 
   useEffect(() => {
     Aos.init({
       duration: 1000,
     });
   }, []);
-
   return (
     <PostContainer data-aos="fade-up" data-aos-anchor-placement="top-bottom">
       {item.image ? (
@@ -42,7 +40,11 @@ const Post = React.memo(({ item }) => {
           <PostTitle>{item.title}</PostTitle>
         </Link>
         <hr />
-        <PostDate>{new Date(item.createdAt).toDateString()}</PostDate>
+        <PostDate>
+        { item.createdAt
+              ? new Date(item.createdAt).toDateString()
+              : new Date().toDateString()}
+        </PostDate>
       </PostInfo>
       <PostDesc>{item.desc}</PostDesc>
     </PostContainer>

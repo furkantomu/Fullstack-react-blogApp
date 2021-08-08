@@ -57,11 +57,7 @@ const SideBarLast = React.memo((props) => {
     }
   };
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
       fetchPosts();
-    }
-    return () => (mounted = false);
   }, []);
 
   const handleClick = useCallback(
