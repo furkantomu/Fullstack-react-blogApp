@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-### VIEW DEMO: https://zealous-davinci-297294.netlify.app
+### VIEW DEMO: https://kind-payne-c302de.netlify.app
 
 **backend repository:** *https://github.com/furkantomu/node-express-blog-restful-api* 
 
